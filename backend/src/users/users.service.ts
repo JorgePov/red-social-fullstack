@@ -17,6 +17,10 @@ export class UsersService {
     return await this.userRepository.save(newUser);
   }
 
+  async findOneByEmail(email: string) {
+    return await this.userRepository.findOneBy({ email });
+  }
+
   async findAll() {
     return this.userRepository.find();
   }

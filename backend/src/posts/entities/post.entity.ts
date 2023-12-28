@@ -1,33 +1,27 @@
-import { Post } from 'src/posts/entities/post.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class User {
+export class Post {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 500, nullable: false })
-  fullName: string;
-
-  @Column({ unique: true, nullable: false })
-  email: string;
+  @Column({ nullable: false })
+  title: string;
 
   @Column({ nullable: false })
-  age: number;
+  content: string;
 
-  @Column({ nullable: false })
-  password: string;
-
-  @Column({ default: 'user' })
-  role: string;
+  @Column({ default: 0 })
+  likes: number;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -38,6 +32,8 @@ export class User {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @OneToMany(() => Post, (post) => post.user)
-  posts: Post;
+  @ManyToOne(() => User, (user) => user.id, {
+    eager: true,
+  })
+  user: User;
 }
