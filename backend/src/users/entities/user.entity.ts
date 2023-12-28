@@ -1,3 +1,4 @@
+import { Role } from 'src/common/enums/role.enum';
 import { Post } from 'src/posts/entities/post.entity';
 import {
   Column,
@@ -23,11 +24,11 @@ export class User {
   @Column({ nullable: false })
   age: number;
 
-  @Column({ nullable: false })
+  @Column({ nullable: false, select: false })
   password: string;
 
-  @Column({ default: 'user' })
-  role: string;
+  @Column({ type: 'enum', enum: Role, default: Role.USER })
+  role: Role;
 
   @CreateDateColumn()
   createdAt: Date;

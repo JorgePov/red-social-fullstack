@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { RegisterDto } from './dto/register.dto';
+
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
@@ -15,46 +16,44 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
-  async login({ email, password }: LoginDto) {
+
+  async register({ fullName, email, password, age }: RegisterDto) {
     const user = await this.usersService.findOneByEmail(email);
 
+    if (user) {
+      throw new BadRequestException('User already exists');
+    }
+
+    await this.usersService.create({
+      fullName,
+      age,
+      email,
+      password: await bcryptjs.hash(password, 10),
+    });
+
+    return {
+      fullName,
+      email,
+    };
+  }
+
+  async login({ email, password }: LoginDto) {
+    const user = await this.usersService.findByEmailWithPassword(email);
     if (!user) {
-      throw new UnauthorizedException('Invalid email');
+      throw new UnauthorizedException('email is wrong');
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
-
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid password');
+      throw new UnauthorizedException('password is wrong');
     }
 
     const payload = { email: user.email, role: user.role };
     const token = await this.jwtService.signAsync(payload);
 
     return {
-      token: token,
-      email: user.email,
-    };
-  }
-
-  async register({ password, email, fullName, age }: RegisterDto) {
-    const user = await this.usersService.findOneByEmail(email);
-
-    if (user) {
-      throw new BadRequestException('Email already exists');
-    }
-
-    const hashedPassword = await bcryptjs.hash(password, 10);
-
-    await this.usersService.create({
-      fullName,
-      age,
+      token,
       email,
-      password: hashedPassword,
-    });
-
-    return {
-      message: 'User created successfully',
     };
   }
 }
