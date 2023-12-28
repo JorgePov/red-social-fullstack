@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { userLogin, userResponse } from '../interfaces/user';
+import { environment } from '../../environments/environment';
 
 
 
@@ -12,7 +12,7 @@ export class AuthService {
   http = inject(HttpClient)
 
   login(body: userLogin) {
-    return this.http.post<userResponse>(`${environment.domain}${environment.pathUrl}/auth/login`, body)
+    return this.http.post<userResponse>(`${environment.domain}${environment.pathUrl}auth/login`, body)
   }
 
   setUserData(userData: userResponse) {

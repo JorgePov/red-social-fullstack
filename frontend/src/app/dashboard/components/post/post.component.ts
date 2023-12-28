@@ -1,12 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Post } from '../../../interfaces/post';
+import { RequestService } from '../../../services/request.service';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, ReactiveFormsModule],
   templateUrl: './post.component.html',
-  styleUrl: './post.component.scss'
 })
 export class PostComponent {
 
+  fb = inject(FormBuilder)
+  requestService = inject(RequestService)
+  postForm: FormGroup
+  constructor() {
+    this.postForm = this.fb.group({
+      title: ['', Validators.required],
+      content: ['', Validators.required]
+    })
+  }
+
+  resetPostForm() { this.postForm.reset() }
+
+  createPost() {
+    if (this.postForm.valid) {
+      const { title, content } = this.postForm.value
+
+      const body: Post = {
+        title,
+        content
+      }
+      this.requestService.requestGeneric<Post>('POST', 'posts', body).subscribe({
+        next: (res) => {
+          this.resetPostForm()
+        },
+        error: (err) => {
+          console.log(err)
+        },
+        complete: () => { }
+      })
+
+    }
+  }
 }

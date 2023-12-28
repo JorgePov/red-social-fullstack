@@ -1,29 +1,37 @@
-<div
-  class="editor mx-auto w-9/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg bg-white rounded-lg mb-3"
->
-  <input
-    class="title bg-white border border-gray-300 p-2 mb-4 outline-none rounded-md"
-    spellcheck="false"
-    placeholder="Title"
-    type="text"
-  />
-  <textarea
-    class="description bg-white sec p-3 h-40 border border-gray-300 outline-none resize-none rounded-md"
-    spellcheck="false"
-    placeholder="Describe everything about this post here"
-  ></textarea>
+<section>
+  <form
+    [formGroup]="postForm"
+    (ngSubmit)="createPost()"
+    class="editor mx-auto w-9/12 flex flex-col text-gray-800 border border-gray-300 p-4 shadow-lg bg-white rounded-lg mb-3"
+  >
+    <input
+      class="title bg-white border border-gray-300 p-2 mb-4 outline-none rounded-md"
+      spellcheck="false"
+      placeholder="Title"
+      type="text"
+      formControlName="title"
+    />
+    <textarea
+      class="description bg-white sec p-3 h-40 border border-gray-300 outline-none resize-none rounded-md"
+      spellcheck="false"
+      placeholder="Describe everything about this post here"
+      formControlName="content"
+    ></textarea>
 
-  <!-- buttons -->
-  <div class="buttons flex mt-2">
-    <button
-      class="border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto"
-    >
-      Cancel
-    </button>
-    <button
-      class="rounded-2xl border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500"
-    >
-      Post
-    </button>
-  </div>
-</div>
+    <!-- buttons -->
+    <div class="buttons flex mt-2">
+      <button
+        class="border-gray-300 p-1 px-4 font-semibold cursor-pointer text-gray-500 ml-auto"
+      >
+        Cancel
+      </button>
+      <button
+        [disabled]="!postForm.valid"
+        type="submit"
+        class="rounded-2xl border border-indigo-500 p-1 px-4 font-semibold cursor-pointer text-gray-200 ml-2 bg-indigo-500 enabled:hover:bg-indigo-600 disabled:bg-gray-300 disabled:border-transparent"
+      >
+        Post
+      </button>
+    </div>
+  </form>
+</section>

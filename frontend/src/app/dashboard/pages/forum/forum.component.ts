@@ -10,5 +10,7 @@ import { PostComponent } from '../../components/post/post.component';
   styleUrl: './forum.component.scss'
 })
 export default class ForumComponent {
+  
+
 
 }
