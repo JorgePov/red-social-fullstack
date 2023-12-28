@@ -1,5 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 interface meenu{
   path:string,
@@ -14,5 +15,6 @@ interface meenu{
   styleUrl: './side-menu.component.scss'
 })
 export class SideMenuComponent {
+  public userName = signal<string>(inject(AuthService).getUserData().fullName)
   public menuItems = signal<meenu[]>([{path: 'messages', title: 'Messages'}])
 }

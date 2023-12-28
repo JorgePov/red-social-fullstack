@@ -15,7 +15,7 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) { }
 
   async register({ fullName, email, password, age }: RegisterDto) {
     const user = await this.usersService.findOneByEmail(email);
@@ -53,6 +53,8 @@ export class AuthService {
 
     return {
       token,
+      id: user.id,
+      fullName: user.fullName,
       email,
     };
   }
