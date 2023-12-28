@@ -25,13 +25,11 @@ export class PostsController {
     @Body() createPostDto: CreatePostDto,
     @ActiveUser() user: UserActiveInterface,
   ) {
-    console.log(user.email);
     return this.postsService.create(createPostDto, user);
   }
 
   @Get()
-  findAll(@ActiveUser() user: UserActiveInterface) {
-    console.log(user.email);
+  findAll() {
     return this.postsService.findAll();
   }
 
