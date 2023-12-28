@@ -11,7 +11,8 @@ export const routes: Routes = [
     children: [
       {
         path: 'messages',
-        loadComponent: () => import('./dashboard/pages/messages/messages.component')
+        title: 'Messages',
+        loadComponent: () => import('./dashboard/pages/forum/forum.component')
       }
     ]
   },
