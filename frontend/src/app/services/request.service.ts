@@ -9,8 +9,6 @@ export class RequestService {
   http = inject(HttpClient)
 
   requestGeneric<T>(method: string, url: string, body?: object) {
-    console.log(body);
-
     return this.http.request<T>(method, `${environment.domain}${environment.pathUrl}${url}`, { body })
   }
 }

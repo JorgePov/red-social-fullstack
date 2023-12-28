@@ -5,7 +5,7 @@ export interface userLogin {
 
 export interface userResponse {
   token?: string;
-  id: number;
+  id?: number;
   fullName: string
   email: string;
 }
