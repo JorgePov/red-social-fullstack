@@ -4,8 +4,15 @@ export interface userLogin {
 }
 
 export interface userResponse {
-  token?: string;
-  id?: number;
-  fullName: string
   email: string;
+  fullName: string;
+  id: number;
+  token?: string;
+}
+
+export interface userRegister {
+  age: number;
+  email: string;
+  fullName: string;
+  password: string;
 }
