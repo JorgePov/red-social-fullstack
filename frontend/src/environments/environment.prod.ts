@@ -1,4 +1,4 @@
 export const environmentDeplo = {
   pathUrl: '/api/v1/',
-  domain: ''
+  domain: 'http://localhost:3000',
 };

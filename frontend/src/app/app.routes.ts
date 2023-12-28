@@ -18,6 +18,12 @@ export const routes: Routes = [
         title: 'Messages',
         loadComponent: () => import('./dashboard/pages/forum/forum.component'),
       },
+      {
+        path: 'profile',
+        title: 'Profile',
+        loadComponent: () =>
+          import('./dashboard/pages/profile/profile.component'),
+      },
     ],
   },
   {
