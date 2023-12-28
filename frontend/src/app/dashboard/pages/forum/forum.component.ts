@@ -22,7 +22,7 @@ export default class ForumComponent implements OnInit {
     this.requestService.requestGeneric<Message[]>('GET', 'posts', {}).subscribe(
       {
         next: (response) => {
-          this.messages.set(response)
+          this.messages.set(response.map((message) => ({ ...message, edit: false })))
         },
         error: (error) => {
           console.log(error)

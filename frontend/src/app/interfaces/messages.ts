@@ -7,5 +7,5 @@ export interface Message {
   likes: number;
   createdAt: Date;
   user: userResponse
-
+  edit:boolean
 }

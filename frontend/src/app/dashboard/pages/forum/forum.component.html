@@ -1,4 +1,4 @@
 <section class="h-full">
   <app-post (newMessageEvent)="getMessages()" />
-  <app-message [messages]="messages" />
+  <app-message (newMessageEvent)="getMessages()" [messages]="messages" />
 </section>
