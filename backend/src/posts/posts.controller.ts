@@ -10,18 +10,28 @@ import {
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { Role } from 'src/common/enums/role.enum';
+import { Auth } from 'src/auth/decorators/auth.decorator';
+import { ActiveUser } from 'src/common/decorators/active-user.decorator';
+import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
 
+@Auth(Role.USER)
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
   @Post()
-  create(@Body() createPostDto: CreatePostDto) {
-    return this.postsService.create(createPostDto);
+  create(
+    @Body() createPostDto: CreatePostDto,
+    @ActiveUser() user: UserActiveInterface,
+  ) {
+    console.log(user.email);
+    return this.postsService.create(createPostDto, user);
   }
 
   @Get()
-  findAll() {
+  findAll(@ActiveUser() user: UserActiveInterface) {
+    console.log(user.email);
     return this.postsService.findAll();
   }
 
@@ -36,7 +46,7 @@ export class PostsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number) {
-    return this.postsService.remove(id);
+  remove(@Param('id') id: number, @ActiveUser() user: UserActiveInterface) {
+    return this.postsService.remove(id, user);
   }
 }
