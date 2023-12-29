@@ -38,7 +38,7 @@ export class MessageComponent {
       return
     }
     this.messages.update(() => this.messages().map((messageMap) => {
-      const isEditing = messageMap.id === message.id;
+      const isEditing = messageMap.id === message.id  && messageMap.edit === false;
       if (isEditing) {
         this.editMessageForm.patchValue(message);
       }
