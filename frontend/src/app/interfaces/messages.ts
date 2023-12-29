@@ -1,4 +1,4 @@
-import { userResponse } from "./user";
+import { userResponse } from './user';
 
 export interface Message {
   id: number;
@@ -6,6 +6,6 @@ export interface Message {
   content: string;
   likes: number;
   createdAt: Date;
-  user: userResponse
-  edit:boolean
+  user: userResponse;
+  edit: boolean;
 }

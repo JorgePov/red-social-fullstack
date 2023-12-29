@@ -82,7 +82,6 @@ export class CardProfileComponent {
     const { newPassword, oldPassword } = this.changePasswordForm.value;
     this.authService.changedPassword({ newPassword, oldPassword }).subscribe({
       next: (response) => {
-        console.log(response);
         this.changeOption('profile');
       },
       error: (error) => {
@@ -90,5 +89,22 @@ export class CardProfileComponent {
       },
       complete: () => {},
     });
+  }
+
+  deleteProfile() {
+    this.requestService
+      .requestGeneric<userResponse>(
+        'DELETE',
+        `users/${this.authService.getUserData().id}`
+      )
+      .subscribe({
+        next: (response) => {
+          this.authService.logout();
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {},
+      });
   }
 }

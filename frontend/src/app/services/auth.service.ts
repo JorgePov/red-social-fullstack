@@ -7,12 +7,14 @@ import {
   userRegister,
   userResponse,
 } from '../interfaces/user';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   http = inject(HttpClient);
+  router = inject(Router);
 
   login(body: userLogin) {
     return this.http.post<userResponse>(
@@ -45,5 +47,6 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('user');
+    this.router.navigate(['/login']);
   }
 }
