@@ -3,11 +3,12 @@ import { MessageComponent } from '../../components/message/message.component';
 import { PostComponent } from '../../components/post/post.component';
 import { RequestService } from '../../../services/request.service';
 import { Message } from '../../../interfaces/messages';
+import { FilterComponent } from '../../components/filter/filter.component';
 
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [MessageComponent, PostComponent],
+  imports: [MessageComponent, PostComponent,FilterComponent],
   templateUrl: './forum.component.html',
   styleUrl: './forum.component.scss'
 })
