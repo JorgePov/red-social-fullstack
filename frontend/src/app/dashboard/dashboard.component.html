@@ -1,10 +1,41 @@
-<div
-  class="flex bg-slate-100 w-full h-full antialiased text-slate-300 selection:bg-blue-600 selection:text-white"
->
-  <div class="flex relative w-full">
-    <app-side-menu />
-    <div class="text-black p-4 w-full h-full">
-      <router-outlet />
+<section class="flex flex-col h-screen">
+  <header
+    class="flex w-full bg-blue-900 h-[3.75rem] justify-between items-center"
+  >
+    <button class="p-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        class="w-5 h-5 fill-current dark:text-gray-100"
+      >
+        <rect width="352" height="32" x="80" y="96"></rect>
+        <rect width="352" height="32" x="80" y="240"></rect>
+        <rect width="352" height="32" x="80" y="384"></rect>
+      </svg>
+    </button>
+    <h1 class="text-lg md:text-2xl font-bold text-white p-2">
+      Red social <span class="text-blue-400">FullStack</span>
+    </h1>
+  </header>
+  <main class="flex-grow bg-gray-200 overflow-y-auto">
+    <div class="flex flex-row">
+      <!-- <app-side-menu class="fixed z-10 h-full w-16 bg-gray-800" /> -->
+      <div class="p-3 w-full h-full md:ml-[15rem]">
+        <router-outlet />
+      </div>
     </div>
-  </div>
-</div>
+  </main>
+  <footer
+    class="flex w-full bg-blue-900 h-[3.75rem] justify-center items-center z-20"
+  >
+    <h1 class="text-lg md:text-2xl font-bold text-white p-2">
+      Desarrollado por
+      <a
+        href="https://www.linkedin.com/in/jorge-poveda/"
+        target="_blank"
+        class="text-blue-400"
+        >Jorge Poveda</a
+      >
+    </h1>
+  </footer>
+</section>
