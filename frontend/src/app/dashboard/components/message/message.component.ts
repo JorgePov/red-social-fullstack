@@ -5,14 +5,13 @@ import { AuthService } from '../../../services/auth.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RequestService } from '../../../services/request.service';
 import { ConfirmationModalComponent } from '../../../shared/confirmation-modal/confirmation-modal.component';
-import { NgxSmartModalModule, NgxSmartModalService } from 'ngx-smart-modal';
 
 
 
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,ConfirmationModalComponent, NgxSmartModalModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule,ConfirmationModalComponent],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss'
 })
@@ -22,7 +21,6 @@ export class MessageComponent {
   @Input() messages = signal<Message[]>([])
   fb = inject(FormBuilder)
   requestService = inject(RequestService)
-  modalService = inject(NgxSmartModalService)
   editMessageForm: FormGroup
 
   constructor() {
