@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { MessageComponent } from '../../components/message/message.component';
-import { PostComponent } from '../../components/post/post.component';
+import { CardProfileComponent } from '../../components/card-profile/card-profile.component';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [MessageComponent, PostComponent],
+  imports: [CardProfileComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })

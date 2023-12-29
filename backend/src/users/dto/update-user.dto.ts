@@ -11,20 +11,20 @@ import {
 export class UpdateUserDto {
   @IsString()
   @IsOptional()
-  fullName: string;
+  fullName?: string;
 
   @IsEmail()
   @IsOptional()
-  email: string;
+  email?: string;
 
   @IsInt()
   @IsPositive()
   @IsOptional()
-  age: number;
+  age?: number;
 
   @IsString()
   @MinLength(6)
   @Transform(({ value }) => value.trim())
   @IsOptional()
-  password: string;
+  password?: string;
 }
