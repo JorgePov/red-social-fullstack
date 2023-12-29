@@ -1,5 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 interface meenu {
@@ -31,6 +31,5 @@ export class SideMenuComponent {
 
   logout() {
     this.authservice.logout();
-    this.router.navigate(['/login']);
   }
 }

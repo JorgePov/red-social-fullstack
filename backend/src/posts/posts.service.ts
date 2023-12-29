@@ -6,6 +6,7 @@ import { Post } from './entities/post.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
+import { SearchPostsDto } from './dto/search-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -32,8 +33,8 @@ export class PostsService {
     return await this.postRepository.save(newPost);
   }
 
-  async findAll() {
-    return await this.postRepository
+  async findAll(searchParams: SearchPostsDto) {
+    const queryBuilder = await this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user')
       .select([
@@ -45,7 +46,15 @@ export class PostsService {
         'user.fullName',
         'user.email',
       ])
-      .getMany();
+      .orderBy('post.createdAt', 'DESC');
+
+    if (searchParams.title) {
+      queryBuilder.andWhere('LOWER(post.title) LIKE LOWER(:title)', {
+        title: `%${searchParams.title}%`,
+      });
+    }
+
+    return queryBuilder.getMany();
   }
 
   async findOne(id: number) {
