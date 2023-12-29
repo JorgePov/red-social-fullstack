@@ -9,6 +9,8 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
+import { PasswordDto } from './dto/password.dto';
+import { UserActiveInterface } from 'src/common/interfaces/user-active.interface';
 
 @Injectable()
 export class AuthService {
@@ -25,9 +27,9 @@ export class AuthService {
     }
 
     await this.usersService.create({
-      fullName,
       age,
       email,
+      fullName,
       password: await bcryptjs.hash(password, 10),
     });
 
@@ -51,10 +53,37 @@ export class AuthService {
     const token = await this.jwtService.signAsync(payload);
 
     return {
-      token,
-      id: user.id,
-      fullName: user.fullName,
+      age: user.age,
       email,
+      fullName: user.fullName,
+      id: user.id,
+      token,
     };
+  }
+
+  async changedPassword(
+    { newPassword, oldPassword }: PasswordDto,
+    user: UserActiveInterface,
+  ) {
+    const userValid = await this.usersService.findByEmailWithPassword(
+      user.email,
+    );
+    if (!userValid) {
+      throw new UnauthorizedException('user is wrong');
+    }
+
+    const isPasswordValid = await bcryptjs.compare(
+      oldPassword,
+      userValid.password,
+    );
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('password is wrong');
+    }
+
+    await this.usersService.update(userValid.id, {
+      password: await bcryptjs.hash(newPassword, 10),
+    });
+
+    return { message: 'password changed' };
   }
 }

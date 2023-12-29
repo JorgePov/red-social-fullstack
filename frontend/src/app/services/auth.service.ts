@@ -1,7 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { userLogin, userRegister, userResponse } from '../interfaces/user';
+import {
+  passwordChange,
+  userLogin,
+  userRegister,
+  userResponse,
+} from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +24,13 @@ export class AuthService {
   register(body: userRegister) {
     return this.http.post<string>(
       `${environment.domain}${environment.pathUrl}/auth/register`,
+      body
+    );
+  }
+
+  changedPassword(body: passwordChange) {
+    return this.http.post<string>(
+      `${environment.domain}${environment.pathUrl}/auth/change-password`,
       body
     );
   }

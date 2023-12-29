@@ -1,0 +1,192 @@
+<section>
+  <div class="flex flex-col justify-center items-center h-[100vh]">
+    @if (action() == availableOptions.profile) {
+    <div
+      class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:!shadow-none p-3"
+    >
+      <div class="grid grid-cols-2 gap-4 px-2 w-full">
+        <div
+          class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none"
+        >
+          <p class="text-sm text-gray-600">Full name</p>
+          <p class="text-base font-medium text-navy-700">
+            {{ authService.getUserData().fullName }}
+          </p>
+        </div>
+
+        <div
+          class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none"
+        >
+          <p class="text-sm text-gray-600">Age</p>
+          <p class="text-base font-medium text-navy-700">
+            {{ authService.getUserData().age }} years
+          </p>
+        </div>
+
+        <div
+          class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none"
+        >
+          <p class="text-sm text-gray-600">Email</p>
+          <p class="text-base font-medium text-navy-700">
+            {{ authService.getUserData().email }}
+          </p>
+        </div>
+        <div
+          class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none"
+        >
+          <button
+            class="w-full text-white focus:outline-none font-medium rounded-lg text-sm px-5 my-1 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
+            (click)="changeOption('changePassword')"
+          >
+            change of password
+          </button>
+          <button
+            class="w-full text-white focus:outline-none font-medium rounded-lg text-sm px-5 my-1 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
+            (click)="changeOption('editProfile')"
+          >
+            edit profile
+          </button>
+          <button
+            class="w-full text-white focus:outline-none font-medium rounded-lg text-sm px-5 my-1 py-2.5 text-center bg-red-400 hover:bg-red-600 focus:ring-red-800"
+          >
+            delete profile
+          </button>
+        </div>
+      </div>
+    </div>
+    } @if (action() == availableOptions.editProfile) {
+    <div
+      class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border shadow-3xl shadow-shadow-500 dark:!bg-navy-800 dark:!shadow-none p-3"
+    >
+      <div class="px-2 w-full">
+        <form
+          [formGroup]="editProfileForm"
+          (ngSubmit)="saveEditProfile()"
+          class="flex flex-col mt-2 text-gray-800 border p-4 bg-white rounded-lg mb-2"
+        >
+          <div
+            class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:!bg-navy-700 dark:shadow-none"
+          >
+            <input
+              class="bg-white w-full border text-md font-bold border-gray-300 p-2 mb-4 outline-none rounded-md"
+              spellcheck="false"
+              placeholder="Full name"
+              type="text"
+              formControlName="fullName"
+            />
+          </div>
+
+          <div
+            class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:!bg-navy-700 dark:shadow-none"
+          >
+            <input
+              class="bg-white w-full border text-md font-bold border-gray-300 p-2 mb-4 outline-none rounded-md"
+              spellcheck="false"
+              placeholder="Age"
+              type="number"
+              min="0"
+              formControlName="age"
+            />
+          </div>
+
+          <div class="flex flex-row justify-end gap-3">
+            <button
+              class="text-white focus:outline-none font-medium rounded-lg text-sm px-5 my-1 py-2.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-800"
+              (click)="changeOption('profile')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="text-white focus:outline-none font-medium rounded-lg text-sm px-5 my-1 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    } @if (action() == availableOptions.changePassword) {
+    <div
+      class="relative flex flex-col items-center rounded-[20px] w-[700px] max-w-[95%] mx-auto bg-white bg-clip-border dark:!bg-navy-800 dark:!shadow-none p-3"
+    >
+      <div class="px-2 w-full">
+        <form
+          [formGroup]="changePasswordForm"
+          (ngSubmit)="saveChangePassword()"
+          class="flex flex-col mt-2 text-gray-800 border p-4 bg-white rounded-lg mb-2"
+        >
+          <div
+            class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:!bg-navy-700 dark:shadow-none"
+          >
+            <label
+              for="oldPasswordConfirmed"
+              class="block mb-2 text-sm font-medium text-black"
+              >Old password:</label
+            >
+            <input
+              class="bg-white w-full border text-md font-bold border-gray-300 p-2 mb-4 outline-none rounded-md"
+              spellcheck="false"
+              placeholder=""
+              type="password"
+              formControlName="newPassword"
+            />
+          </div>
+
+          <div
+            class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:!bg-navy-700 dark:shadow-none"
+          >
+            <label
+              for="oldPasswordConfirmed"
+              class="block mb-2 text-sm font-medium text-black"
+              >New password:</label
+            >
+            <input
+              class="bg-white w-full border text-md font-bold border-gray-300 p-2 mb-4 outline-none rounded-md"
+              spellcheck="false"
+              placeholder=""
+              type="password"
+              formControlName="oldPassword"
+            />
+          </div>
+          <div
+            class="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 dark:!bg-navy-700 dark:shadow-none"
+          >
+            <label
+              for="oldPasswordConfirmed"
+              class="block mb-2 text-sm font-medium text-black"
+              >New password confirmation:</label
+            >
+            <input
+              class="bg-white w-full border text-md font-bold border-gray-300 p-2 mb-4 outline-none rounded-md"
+              spellcheck="false"
+              placeholder=""
+              type="password"
+              formControlName="oldPasswordConfirmed"
+            />
+          </div>
+          <div class="flex flex-row justify-end gap-3">
+            <button
+              class="text-white focus:outline-none font-medium rounded-lg text-sm px-5 my-1 py-2.5 text-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-800"
+              (click)="changeOption('profile')"
+            >
+              Cancel
+            </button>
+            <button
+              [disabled]="
+                !changePasswordForm.valid ||
+                changePasswordForm.value.oldPassword !==
+                  changePasswordForm.value.oldPasswordConfirmed
+              "
+              type="submit"
+              class="text-white focus:outline-none font-medium rounded-lg text-sm px-5 my-1 py-2.5 text-center bg-primary-600 hover:bg-primary-700 focus:ring-primary-800 disabled:bg-gray-300"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    }
+  </div>
+</section>
