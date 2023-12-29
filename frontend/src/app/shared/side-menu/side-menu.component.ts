@@ -17,12 +17,11 @@ interface meenu {
 })
 export class SideMenuComponent {
   authservice = inject(AuthService);
-  router = inject(Router);
   public userName = signal<string>(inject(AuthService).getUserData().fullName);
   isCollapsed = signal<boolean>(false);
   public menuItems = signal<meenu[]>([
     { path: 'messages', title: 'Messages', svg: 'message' },
-    { path: 'profile', title: 'Profile',svg: 'profile' },
+    { path: 'profile', title: 'Profile', svg: 'profile' },
   ]);
 
   toggleCollapsed() {

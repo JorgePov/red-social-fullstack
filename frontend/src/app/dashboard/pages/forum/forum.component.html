@@ -1,5 +1,5 @@
 <section class="h-full">
   <app-post (newMessageEvent)="getMessages()" />
-  <app-filter />
+  <app-filter (filterString)="getMessages($event)" />
   <app-message (newMessageEvent)="getMessages()" [messages]="messages" />
 </section>

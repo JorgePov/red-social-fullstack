@@ -8,29 +8,30 @@ import { FilterComponent } from '../../components/filter/filter.component';
 @Component({
   selector: 'app-forum',
   standalone: true,
-  imports: [MessageComponent, PostComponent,FilterComponent],
+  imports: [MessageComponent, PostComponent, FilterComponent],
   templateUrl: './forum.component.html',
-  styleUrl: './forum.component.scss'
+  styleUrl: './forum.component.scss',
 })
 export default class ForumComponent implements OnInit {
   requestService = inject(RequestService);
   messages = signal<Message[]>([]);
   ngOnInit(): void {
-    this.getMessages()
+    this.getMessages();
   }
 
-  getMessages() {
-    this.requestService.requestGeneric<Message[]>('GET', 'posts', {}).subscribe(
-      {
+  getMessages(filter: string = '') {
+    this.requestService
+      .requestGeneric<Message[]>('GET', `posts?title=${filter}`)
+      .subscribe({
         next: (response) => {
-          this.messages.set(response.map((message) => ({ ...message, edit: false })))
+          this.messages.set(
+            response.map((message) => ({ ...message, edit: false }))
+          );
         },
         error: (error) => {
-          console.log(error)
+          console.log(error);
         },
-        complete: () => { }
-      }
-    )
+        complete: () => {},
+      });
   }
-
 }
