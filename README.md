@@ -50,6 +50,13 @@ Frontend
   yarn install || npm install
   yarn start || npm start
 ```
+
+
+Base de datos
+```bash
+  docker-compose start postgres
+```
+  
 Ingresar a http://localhost:4200
 
 
