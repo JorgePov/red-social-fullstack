@@ -1,0 +1,58 @@
+version: '3.9'
+
+
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres_inlaze
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=qweasdqwe
+      - POSTGRES_DB=inlaze_db
+    networks:
+      - inlaze-network
+  api:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    container_name: backend_inlaze
+    volumes:
+      - ./backend:/api
+    working_dir: /api
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    depends_on:
+      - postgres
+    networks:
+      - inlaze-network
+  app:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    container_name: frontend_inlaze
+    volumes:
+      - ./frontend:/app
+    working_dir: /app
+    ports:
+      - 4200:4200
+    expose:
+      - 4200
+    networks:
+      - inlaze-network
+
+networks:
+  inlaze-network:
+    driver: bridge
+
+volumes:
+  database:
