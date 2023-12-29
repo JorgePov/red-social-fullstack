@@ -30,4 +30,8 @@ export class AuthService {
   getUserData(): userResponse {
     return JSON.parse(localStorage.getItem('user') || '{}');
   }
+
+  logout() {
+    localStorage.removeItem('user');
+  }
 }

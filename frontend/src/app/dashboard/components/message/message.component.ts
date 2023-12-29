@@ -11,7 +11,7 @@ import { ConfirmationModalComponent } from '../../../shared/confirmation-modal/c
 @Component({
   selector: 'app-message',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule,ConfirmationModalComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ConfirmationModalComponent],
   templateUrl: './message.component.html',
   styleUrl: './message.component.scss'
 })
@@ -22,6 +22,7 @@ export class MessageComponent {
   fb = inject(FormBuilder)
   requestService = inject(RequestService)
   editMessageForm: FormGroup
+  isEditing = signal<boolean>(false)
 
   constructor() {
     this.editMessageForm = this.fb.group({
@@ -31,6 +32,11 @@ export class MessageComponent {
   }
 
   editExpecificMessage(message: Message) {
+    const isEditingMessage = this.messages().find((messageMap) => messageMap.edit === true);
+    if (isEditingMessage) {
+      this.cancelEditMessage()
+      return
+    }
     this.messages.update(() => this.messages().map((messageMap) => {
       const isEditing = messageMap.id === message.id;
       if (isEditing) {
@@ -60,7 +66,7 @@ export class MessageComponent {
   }
 
   deleteMessage(message: Message) {
-    this.requestService.requestGeneric<Message>('DELETE', `posts/${message.id}`,{}).subscribe(
+    this.requestService.requestGeneric<Message>('DELETE', `posts/${message.id}`, {}).subscribe(
       {
         next: (_) => {
           this.newMessageEvent.emit()

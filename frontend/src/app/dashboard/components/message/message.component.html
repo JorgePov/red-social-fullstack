@@ -1,5 +1,5 @@
 @for (message of messages(); track message.id) {
-<div class="flex items-center justify-center mb-3">
+<div class="flex items-center justify-center mb-3 overflow-y-auto">
   <div class="rounded-xl border p-5 shadow-md w-9/12 bg-white">
     <div class="flex w-full items-center justify-between border-b pb-3">
       <div class="flex items-center space-x-3">
@@ -64,7 +64,7 @@
     <form
       [formGroup]="editMessageForm"
       (ngSubmit)="saveEditMessage(message)"
-      class="flex flex-col mt-2 text-gray-800 border p-4 bg-white rounded-lg mb-2"
+      class="flex flex-col mt-2 text-gray-800 p-4mb-2"
     >
       <input
         class="title bg-white border text-xl font-bold border-gray-300 p-2 mb-4 outline-none rounded-md"
