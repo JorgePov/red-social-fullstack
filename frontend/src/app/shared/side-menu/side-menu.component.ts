@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth.service';
 interface meenu {
   path: string;
   title: string;
+  svg?: string;
 }
 
 @Component({
@@ -16,13 +17,17 @@ interface meenu {
 })
 export class SideMenuComponent {
   authservice = inject(AuthService);
-  public userName = signal<string>(
-    inject(AuthService).getUserData().fullName || ''
-  );
+  router = inject(Router);
+  public userName = signal<string>(inject(AuthService).getUserData().fullName);
+  isCollapsed = signal<boolean>(false);
   public menuItems = signal<meenu[]>([
-    { path: 'messages', title: 'Messages' },
-    { path: 'profile', title: 'Profile' },
+    { path: 'messages', title: 'Messages', svg: 'message' },
+    { path: 'profile', title: 'Profile',svg: 'profile' },
   ]);
+
+  toggleCollapsed() {
+    this.isCollapsed.update((value) => !value);
+  }
 
   logout() {
     this.authservice.logout();
