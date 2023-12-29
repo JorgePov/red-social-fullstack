@@ -32,11 +32,7 @@ export class MessageComponent {
   }
 
   editExpecificMessage(message: Message) {
-    const isEditingMessage = this.messages().find((messageMap) => messageMap.edit === true);
-    if (isEditingMessage) {
-      this.cancelEditMessage()
-      return
-    }
+  
     this.messages.update(() => this.messages().map((messageMap) => {
       const isEditing = messageMap.id === message.id  && messageMap.edit === false;
       if (isEditing) {
